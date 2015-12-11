@@ -1,0 +1,8 @@
+UAI_configId = jdbcTemplate
+UAI_groupId = default
+UAI_poolClass = com.mchange.v2.c3p0.ComboPooledDataSource
+identityToken = c3p0_default
+driverClass = com.mysql.jdbc.Driver
+jdbcUrl=jdbc:mysql://localhost:3306/daochongtest?useUnicode=true&autoReconnect=true&characterEncoding=utf-8
+user=root
+password=
