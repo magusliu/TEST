@@ -1,5 +1,6 @@
 package org.daochong.ucm;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -142,6 +143,35 @@ public class DefaultConfigurationContainer implements ConfigurationContainer {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	public void close() {
+		for (Configuration cfg : this.configs) {
+			if (cfg.getConfigBean() != null) {
+				destory(cfg.getConfigBean());
+			}
+		}
+	}
+
+	private void destory(Object obj) {
+		if (obj == null)
+			return;
+		try {
+			Method m = obj.getClass().getDeclaredMethod("close");
+			m.setAccessible(true);
+			m.invoke(obj);
+			return;
+		} catch (Throwable e) {
+
+		}
+		try {
+			Method m = obj.getClass().getDeclaredMethod("destory");
+			m.setAccessible(true);
+			m.invoke(obj);
+			return;
+		} catch (Throwable e) {
+
 		}
 	}
 
