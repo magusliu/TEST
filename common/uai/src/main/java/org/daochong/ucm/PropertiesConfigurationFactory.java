@@ -1,7 +1,9 @@
 package org.daochong.ucm;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -18,6 +20,8 @@ public class PropertiesConfigurationFactory extends BasePropertiesConfigurationF
 	private String sql;
 	private String file;
 	private List<String> files;
+
+	private Map<File, Long> lastTimes = new HashMap<File, Long>();
 
 	private long lastLoad;
 	private int interval;
@@ -77,6 +81,11 @@ public class PropertiesConfigurationFactory extends BasePropertiesConfigurationF
 		super.load();
 		if (this.file != null) {
 			try {
+				String f = this.getClass().getResource(this.file).getFile();
+				File file = new File(f);
+				if (file.exists()) {
+					this.lastTimes.put(file, file.lastModified());
+				}
 				Properties prop = new Properties(this.getClass().getResourceAsStream(this.file));
 				Configuration config = config(prop);
 				if (config != null) {
@@ -119,6 +128,7 @@ public class PropertiesConfigurationFactory extends BasePropertiesConfigurationF
 				return false;
 			}
 		}
+
 		return false;
 	}
 
