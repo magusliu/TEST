@@ -50,6 +50,6 @@ public class SecurityParameterUtils {
 	public static String filter(String val) {
 		if (val == null)
 			return val;
-		return val.replaceAll("'", "''").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		return val.replaceAll("'", "''").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\/|\\/|\\||:|\\?|\\*|\"|<|>|\\p{Cntrl}", "_");
 	}
 }
